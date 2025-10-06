@@ -1,0 +1,579 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.title }} - Chef Portfolio{% endblock %}
+
+{% block content %}
+<!-- Recipe Header -->
+<section class="recipe-header">
+    <div class="container">
+        <div class="recipe-header-content">
+            <div class="recipe-header-info">
+                <a href="{% url 'recipes:recipe_list' %}" class="back-link">← Back to Recipes</a>
+                <span class="recipe-category">{{ recipe.category.name }}</span>
+                <h1 class="recipe-title">{{ recipe.title }}</h1>
+                <p class="recipe-description">{{ recipe.description }}</p>
+                
+                <div class="recipe-quick-info">
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="currentColor"/>
+                        </svg>
+                        <div>
+                            <strong>Prep Time</strong>
+                            <p>{{ recipe.prep_time }} min</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12.5 1.5c-1.77 0-3.33.78-4.42 2H6.5c-.83 0-1.5.67-1.5 1.5v16c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-16c0-.83-.67-1.5-1.5-1.5h-1.58c-1.09-1.22-2.65-2-4.42-2zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z" fill="currentColor"/>
+                        </svg>
+                        <div>
+                            <strong>Cook Time</strong>
+                            <p>{{ recipe.cook_time }} min</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>
+                        </svg>
+                        <div>
+                            <strong>Servings</strong>
+                            <p>{{ recipe.servings }}</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="currentColor"/>
+                        </svg>
+                        <div>
+                            <strong>Difficulty</strong>
+                            <p>{{ recipe.get_difficulty_display }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recipe-actions">
+                    <button class="action-btn print-recipe">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" fill="currentColor"/>
+                        </svg>
+                        Print
+                    </button>
+                    <button class="action-btn share-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" fill="currentColor"/>
+                        </svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+            
+            <div class="recipe-header-image">
+                    {% if recipe.featured_image %}
+                        <img src="{{ recipe.featured_image.url }}" alt="{{ recipe.title }}">
+                    {% else %}
+                        <img src="/static/images/default.jpg" alt="No image available">
+                    {% endif %}
+                {% if avg_rating > 0 %}
+                <div class="rating-badge">
+                    <span class="rating-number">{{ avg_rating }}</span>
+                    <div class="rating-stars">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= avg_rating %}
+                                <span class="star filled">★</span>
+                            {% else %}
+                                <span class="star">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="rating-count">({{ rating_count }} reviews)</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recipe Content -->
+<section class="recipe-content">
+    <div class="container">
+        <div class="recipe-layout">
+            <!-- Ingredients -->
+            <div class="ingredients-section">
+                <h2>Ingredients</h2>
+                <ul class="ingredients-list">
+                    {% for ingredient in recipe.ingredients_list %}
+                    <li>
+                        <span class="ingredient-check">✓</span>
+                        {{ ingredient }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Instructions -->
+            <div class="instructions-section">
+                <h2>Instructions</h2>
+                <ol class="instructions-list">
+                    {% for instruction in recipe.instructions_list %}
+                    <li>
+                        <span class="step-number">{{ forloop.counter }}</span>
+                        <p>{{ instruction }}</p>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Video Section -->
+{% if recipe.video_url %}
+<section class="video-section">
+    <div class="container">
+        <h2 class="section-title">Watch How It's Made</h2>
+        <div class="video-container">
+            <iframe src="{{ recipe.video_url }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Ratings Section -->
+<section class="ratings-section">
+    <div class="container">
+        <h2 class="section-title">Reviews</h2>
+        
+        <!-- Add Rating Form -->
+        <div class="add-rating-form">
+            <h3>Leave a Review</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select name="rating" required>
+                        <option value="">Select rating</option>
+                        <option value="5">5 Stars - Excellent</option>
+                        <option value="4">4 Stars - Very Good</option>
+                        <option value="3">3 Stars - Good</option>
+                        <option value="2">2 Stars - Fair</option>
+                        <option value="1">1 Star - Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Comment (Optional)</label>
+                    <textarea name="comment" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </div>
+        
+        <!-- Ratings List -->
+        <div class="ratings-list">
+            {% for rating in ratings %}
+            <div class="rating-card">
+                <div class="rating-header">
+                    <div class="rating-author">
+                        <div class="author-avatar">{{ rating.name|slice:":1" }}</div>
+                        <div>
+                            <h4>{{ rating.name }}</h4>
+                            <span class="rating-date">{{ rating.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="rating-stars">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= rating.rating %}
+                                <span class="star filled">★</span>
+                            {% else %}
+                                <span class="star">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if rating.comment %}
+                <p class="rating-comment">{{ rating.comment }}</p>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p class="no-ratings">No reviews yet. Be the first to review this recipe!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+.recipe-header {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+}
+
+.recipe-header-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--secondary-color);
+}
+
+.recipe-title {
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+.recipe-description {
+    font-size: 1.25rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.recipe-quick-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.info-item svg {
+    color: var(--primary-color);
+}
+
+.info-item strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.info-item p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.recipe-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--white);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.recipe-header-image {
+    position: relative;
+}
+
+.recipe-header-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow-lg);
+}
+
+.rating-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px var(--shadow-lg);
+}
+
+.rating-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: block;
+}
+
+.rating-count {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.recipe-content {
+    padding: 4rem 0;
+}
+
+.recipe-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+}
+
+.ingredients-section,
+.instructions-section {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.ingredients-section h2,
+.instructions-section h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.ingredients-list {
+    list-style: none;
+}
+
+.ingredients-list li {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: var(--light-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ingredient-check {
+    color: var(--success);
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.instructions-list {
+    list-style: none;
+    counter-reset: step-counter;
+}
+
+.instructions-list li {
+    counter-increment: step-counter;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-number::before {
+    content: counter(step-counter);
+}
+
+.instructions-list li p {
+    flex: 1;
+    line-height: 1.8;
+}
+
+.video-section {
+    padding: 4rem 0;
+    background: var(--light-color);
+}
+
+.video-container {
+    max-width: 900px;
+    margin: 0 auto;
+    aspect-ratio: 16/9;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px var(--shadow-lg);
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.ratings-section {
+    padding: 4rem 0;
+}
+
+.add-rating-form {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px var(--shadow);
+    margin-bottom: 3rem;
+}
+
+.add-rating-form h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.submit-btn {
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.ratings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rating-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.rating-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.rating-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.rating-author h4 {
+    margin-bottom: 0.25rem;
+}
+
+.rating-date {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.rating-comment {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.no-ratings {
+    text-align: center;
+    color: var(--text-light);
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .recipe-header-content,
+    .recipe-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .recipe-quick-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

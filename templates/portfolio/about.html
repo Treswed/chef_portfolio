@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Chef Portfolio{% endblock %}
+
+{% block content %}
+<!-- About Hero -->
+<section class="about-hero">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image">
+                {% if chef and chef.profile_image %}
+                <img src="{{ chef.profile_image.url }}" alt="{{ chef.name }}">
+                {% else %}
+                <div class="chef-placeholder-large">
+                    <svg viewBox="0 0 200 200" width="400" height="400">
+                        <circle cx="100" cy="100" r="90" fill="#FF6B6B" opacity="0.2"/>
+                        <path d="M100 40c-8 0-14 4-18 10-4-2-8-4-14-4-12 0-20 8-20 20 0 4 2 8 4 12v16c0 16 12 28 28 28h40c16 0 28-12 28-28V78c2-4 4-8 4-12 0-12-8-20-20-20-6 0-10 2-14 4-4-6-10-10-18-10z" fill="#FF6B6B"/>
+                        <rect x="60" y="110" width="80" height="16" rx="4" fill="#FFF"/>
+                    </svg>
+                </div>
+                {% endif %}
+            </div>
+            <div class="about-text">
+                <h1>{% if chef %}{{ chef.name }}{% else %}Chef Name{% endif %}</h1>
+                <p class="tagline">{% if chef %}{{ chef.tagline }}{% else %}Passionate Chef & Culinary Artist{% endif %}</p>
+                <div class="about-bio">
+                    {% if chef %}
+                    {{ chef.bio|linebreaks }}
+                    {% else %}
+                    <p>Welcome to my culinary world! I'm a passionate chef dedicated to creating delicious and memorable dining experiences. With years of experience in the kitchen, I've developed a unique style that combines traditional techniques with modern innovation.</p>
+                    <p>My journey in the culinary arts began at a young age, and I've been fortunate to train under some of the world's best chefs. Today, I'm excited to share my recipes, techniques, and love for food with you.</p>
+                    {% endif %}
+                </div>
+                
+                {% if chef %}
+                <div class="specialties">
+                    <h3>Specialties</h3>
+                    <div class="specialty-tags">
+                        {% for specialty in chef.specialties|cut:"," %}
+                        <span class="specialty-tag">{{ specialty }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Timeline -->
+<section class="experience-section">
+    <div class="container">
+        <h2 class="section-title">My Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon">🎓</div>
+                <div class="timeline-content">
+                    <h3>Culinary School</h3>
+                    <p>Graduated from prestigious culinary institute with honors</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">👨‍🍳</div>
+                <div class="timeline-content">
+                    <h3>Professional Training</h3>
+                    <p>Worked under Michelin-starred chefs in renowned restaurants</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">⭐</div>
+                <div class="timeline-content">
+                    <h3>Head Chef</h3>
+                    <p>Led kitchen teams and developed signature dishes</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon">📚</div>
+                <div class="timeline-content">
+                    <h3>Teaching & Sharing</h3>
+                    <p>Now sharing my passion through recipes and cooking classes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills-section">
+    <div class="container">
+        <h2 class="section-title">Culinary Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">🔪</div>
+                <h3>Knife Skills</h3>
+                <p>Expert precision cutting and preparation techniques</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🍳</div>
+                <h3>Cooking Methods</h3>
+                <p>Mastery of various cooking techniques and styles</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🎨</div>
+                <h3>Plating & Presentation</h3>
+                <p>Creating visually stunning culinary masterpieces</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🌿</div>
+                <h3>Flavor Pairing</h3>
+                <p>Understanding and combining flavors harmoniously</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.about-hero {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px var(--shadow-lg);
+}
+
+.chef-placeholder-large {
+    display: flex;
+    justify-content: center;
+}
+
+.about-text h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.tagline {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.about-bio {
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.specialties h3 {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.specialty-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.specialty-tag {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.experience-section {
+    padding: 4rem 0;
+}
+
+.timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-color);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px var(--shadow-lg);
+    z-index: 1;
+}
+
+.timeline-content {
+    flex: 1;
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.timeline-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.skills-section {
+    padding: 4rem 0;
+    background: var(--light-color);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.skill-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px var(--shadow-lg);
+}
+
+.skill-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.skill-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.skill-card p {
+    color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+        flex-direction: row;
+        padding-left: 80px;
+    }
+    
+    .timeline-icon {
+        position: absolute;
+        left: 0;
+    }
+}
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

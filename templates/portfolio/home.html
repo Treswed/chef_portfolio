@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title animate-slide-in">
+                Welcome to My Culinary World
+            </h1>
+            <p class="hero-subtitle animate-slide-in-delay">
+                {% if chef %}{{ chef.tagline }}{% else %}Crafting delicious experiences, one dish at a time{% endif %}
+            </p>
+            <div class="hero-buttons animate-slide-in-delay-2">
+                <a href="{% url 'recipes:recipe_list' %}" class="btn-hero-primary">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z" fill="currentColor"/>
+                    </svg>
+                    Explore Recipes
+                </a>
+                <a href="{% url 'portfolio:about' %}" class="btn-hero-secondary">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            {% if chef and chef.profile_image %}
+            <img src="{{ chef.profile_image.url }}" alt="{{ chef.name }}" class="chef-image">
+            {% else %}
+            <div class="chef-placeholder">
+                <svg viewBox="0 0 200 200" width="300" height="300">
+                    <circle cx="100" cy="100" r="90" fill="#FF6B6B" opacity="0.2"/>
+                    <path d="M100 40c-8 0-14 4-18 10-4-2-8-4-14-4-12 0-20 8-20 20 0 4 2 8 4 12v16c0 16 12 28 28 28h40c16 0 28-12 28-28V78c2-4 4-8 4-12 0-12-8-20-20-20-6 0-10 2-14 4-4-6-10-10-18-10z" fill="#FF6B6B"/>
+                    <rect x="60" y="110" width="80" height="16" rx="4" fill="#FFF"/>
+                </svg>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Recipes -->
+<section class="featured-recipes">
+    <div class="container">
+        <h2 class="section-title">Featured Recipes</h2>
+        <p class="section-subtitle">Discover my most popular and delicious creations</p>
+        
+        <div class="recipes-grid">
+            {% for recipe in featured_recipes %}
+            <div class="recipe-card">
+                <div class="recipe-image">
+                        {% if recipe.featured_image %}
+                            <img src="{{ recipe.featured_image.url }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            <img src="/static/images/default.jpg" alt="No image available">
+                        {% endif %}
+                    <div class="recipe-overlay">
+                        <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn-view-recipe">View Recipe</a>
+                    </div>
+                </div>
+                <div class="recipe-info">
+                    <span class="recipe-category">{{ recipe.category.name }}</span>
+                    <h3>{{ recipe.title }}</h3>
+                    <p>{{ recipe.description|truncatewords:15 }}</p>
+                    <div class="recipe-meta">
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="currentColor"/>
+                            </svg>
+                            {{ recipe.total_time }} min
+                        </span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24" width="16" height="16">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="currentColor"/>
+                            </svg>
+                            {{ recipe.servings }} servings
+                        </span>
+                        <span class="difficulty-badge difficulty-{{ recipe.difficulty }}">{{ recipe.get_difficulty_display }}</span>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <p>No featured recipes yet. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center">
+            <a href="{% url 'recipes:recipe_list' %}" class="btn-view-all">View All Recipes →</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🍳</div>
+                <h3 class="stat-number" data-target="150">0</h3>
+                <p class="stat-label">Recipes Created</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <h3 class="stat-number" data-target="{% if chef %}{{ chef.years_experience }}{% else %}10{% endif %}">0</h3>
+                <p class="stat-label">Years Experience</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👨‍🍳</div>
+                <h3 class="stat-number" data-target="50">0</h3>
+                <p class="stat-label">Cooking Classes</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❤️</div>
+                <h3 class="stat-number" data-target="10000">0</h3>
+                <p class="stat-label">Happy Customers</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section">
+    <div class="container">
+        <h2 class="section-title">What People Say</h2>
+        <p class="section-subtitle">Hear from those who've tried my recipes</p>
+        
+        <div class="testimonials-grid">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= testimonial.rating %}
+                            <span class="star filled">★</span>
+                        {% else %}
+                            <span class="star">☆</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <p class="testimonial-content">"{{ testimonial.content }}"</p>
+                <div class="testimonial-author">
+                    {% if testimonial.image %}
+                    <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+                    {% else %}
+                    <div class="author-avatar">{{ testimonial.name|slice:":1" }}</div>
+                    {% endif %}
+                    <div>
+                        <h4>{{ testimonial.name }}</h4>
+                        <p>{{ testimonial.role }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <p>No testimonials yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Recent Blog Posts -->
+{% if recent_posts %}
+<section class="blog-preview">
+    <div class="container">
+        <h2 class="section-title">From the Blog</h2>
+        <p class="section-subtitle">Latest culinary stories and tips</p>
+        
+        <div class="blog-grid">
+            {% for post in recent_posts %}
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">{{ post.created_at|date:"M d, Y" }}</span>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.excerpt }}</p>
+                    <a href="{% url 'blog:blog_detail' post.slug %}" class="read-more">Read More →</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Ready to Start Cooking?</h2>
+        <p>Explore my collection of delicious recipes and start your culinary journey today!</p>
+        <a href="{% url 'recipes:recipe_list' %}" class="btn-cta">Browse All Recipes</a>
+    </div>
+</section>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

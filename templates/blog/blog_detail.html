@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Chef Portfolio{% endblock %}
+
+{% block content %}
+<article class="blog-post">
+    <div class="container">
+        <a href="{% url 'blog:blog_list' %}" class="back-link">← Back to Blog</a>
+        
+        <header class="post-header">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <div class="post-meta">
+                <span class="post-author">By {{ post.author }}</span>
+                <span class="post-date">{{ post.created_at|date:"F d, Y" }}</span>
+                <span class="post-views">{{ post.views }} views</span>
+            </div>
+        </header>
+        
+        <div class="post-image">
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+        </div>
+        
+        <div class="post-content">
+            {{ post.content|linebreaks }}
+        </div>
+        
+        <div class="post-footer">
+            <button class="share-btn">Share this post</button>
+        </div>
+    </div>
+</article>
+
+{% if recent_posts %}
+<section class="related-posts">
+    <div class="container">
+        <h2 class="section-title">More Posts</h2>
+        <div class="blog-grid">
+            {% for related_post in recent_posts %}
+            <div class="blog-card">
+                <div class="blog-image">
+                    <img src="{{ related_post.featured_image.url }}" alt="{{ related_post.title }}">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">{{ related_post.created_at|date:"M d, Y" }}</span>
+                    <h3>{{ related_post.title }}</h3>
+                    <p>{{ related_post.excerpt }}</p>
+                    <a href="{% url 'blog:blog_detail' related_post.slug %}" class="read-more">Read More →</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<style>
+.blog-post {
+    padding: 3rem 0;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--secondary-color);
+}
+
+.post-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.post-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    color: var(--text-light);
+}
+
+.post-image {
+    margin-bottom: 3rem;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+}
+
+.post-content {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+    font-size: 1.125rem;
+}
+
+.post-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.related-posts {
+    padding: 4rem 0;
+    background: var(--light-color);
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Videos - Chef Portfolio{% endblock %}
+
+{% block content %}
+<section class="videos-header">
+    <div class="container">
+        <h1 class="page-title">Cooking Videos</h1>
+        <p class="page-subtitle">Watch me create delicious dishes step by step</p>
+    </div>
+</section>
+
+<section class="videos-section">
+    <div class="container">
+        <div class="videos-grid">
+            {% for video in videos %}
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    {% if video.thumbnail %}
+                    <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}">
+                    {% else %}
+                    <div class="video-placeholder">
+                        <svg viewBox="0 0 24 24" width="80" height="80">
+                            <path d="M8 5v14l11-7z" fill="var(--primary-color)"/>
+                        </svg>
+                    </div>
+                    {% endif %}
+                    <div class="play-button">▶</div>
+                    {% if video.duration %}
+                    <span class="video-duration">{{ video.duration }}</span>
+                    {% endif %}
+                </div>
+                <div class="video-info">
+                    <h3>{{ video.title }}</h3>
+                    <p>{{ video.description|truncatewords:20 }}</p>
+                    <a href="{{ video.video_url }}" target="_blank" class="watch-btn">Watch Video</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <p>No videos available yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+.videos-header {
+    padding: 3rem 0;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+    text-align: center;
+}
+
+.videos-section {
+    padding: 3rem 0;
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.video-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px var(--shadow-lg);
+}
+
+.video-thumbnail {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--light-color);
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 165, 0, 0.2));
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 107, 107, 0.9);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.video-card:hover .play-button {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: var(--primary-color);
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--white);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.video-info {
+    padding: 1.5rem;
+}
+
+.video-info h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.video-info p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.watch-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.watch-btn:hover {
+    background: var(--secondary-color);
+}
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
