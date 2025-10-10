@@ -15,7 +15,7 @@ services:
     command: gunicorn chef_site.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
-      - "C:\\Users\\Busy_John\\chef_portfolio_data:/data"
+      - "C:\\Users\\Busy_John\\OneDrive\\Desktop\\python\\chef_portfolio\\"
     ports:
       - "8000:8000"
     environment:
