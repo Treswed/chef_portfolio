@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'chef_db',           
         'USER': 'chef_user',           
         'PASSWORD': 'Piroh234',   
-        'HOST': 'localhost',           
+        'HOST': 'db',           
         'PORT': '5432',                   
     }
 }
