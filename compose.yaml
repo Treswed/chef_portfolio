@@ -20,7 +20,7 @@ services:
       - "8000:8000"
     environment:
       # Using sqlite for local development; DB file is mounted at /data/db.sqlite3 inside container
-      SQLITE_PATH: /data/db.sqlite3
+      SQLITE_PATH: db.sqlite3
 
 volumes: {}
     
