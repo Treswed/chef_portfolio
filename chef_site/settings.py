@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,10 +78,24 @@ WSGI_APPLICATION = 'chef_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Determine sqlite path from environment (useful for Docker) or fallback to local path
+sqlite_path_env = os.environ.get('SQLITE_PATH')
+if sqlite_path_env:
+    SQLITE_PATH = Path(sqlite_path_env)
+else:
+    SQLITE_PATH = BASE_DIR / 'db.sqlite3'
+
+# Ensure parent directory exists when running locally
+try:
+    SQLITE_PATH.parent.mkdir(parents=True, exist_ok=True)
+except Exception:
+    # ignore if the container user can't create directories; permission checks happen at runtime
+    pass
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': Path(r"C:\\Users\\Busy_John\\chef_portfolio_data\\db.sqlite3"),
+        'NAME': SQLITE_PATH,
     }
 }
 
