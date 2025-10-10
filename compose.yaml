@@ -10,33 +10,19 @@
 
 
 services:
-  db:
-    image: postgres:15
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_DB: chef_db
-      POSTGRES_USER: chef_user
-      POSTGRES_PASSWORD: Piroh234
-
   web:
     build: .
     command: gunicorn chef_site.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
+      - "C:\\Users\\Busy_John\\chef_portfolio_data:/data"
     ports:
       - "8000:8000"
-    depends_on:
-      - db-1
     environment:
-      DB_NAME: chef_db
-      DB_USER: chef_user
-      DB_PASSWORD: Piroh234
-      DB_HOST: db-1
-      DB_PORT: 5432
+      # Using sqlite for local development; DB file is mounted at /data/db.sqlite3 inside container
+      SQLITE_PATH: /data/db.sqlite3
 
-volumes:
-  postgres_data:
+volumes: {}
     
   
 

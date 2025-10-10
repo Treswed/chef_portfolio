@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'chef_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'chef_db',           
-        'USER': 'chef_user',           
-        'PASSWORD': 'Piroh234',   
-        'HOST': 'db',           
-        'PORT': '5432',                   
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': Path(r"C:\\Users\\Busy_John\\chef_portfolio_data\\db.sqlite3"),
     }
 }
 
