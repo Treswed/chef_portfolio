@@ -27,12 +27,12 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - db-1
     environment:
       DB_NAME: chef_db
       DB_USER: chef_user
       DB_PASSWORD: Piroh234
-      DB_HOST: db
+      DB_HOST: db-1
       DB_PORT: 5432
 
 volumes:
