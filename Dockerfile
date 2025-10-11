@@ -38,20 +38,14 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
 
-# Copy the source code into the container.
-COPY . .
-
-# Copy entrypoint and make executable (do this as root before switching user)
-COPY scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
 # Switch to the non-privileged user to run the application.
 USER appuser
+
+# Copy the source code into the container.
+COPY . .
 
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-# Run the application via entrypoint (ensures sqlite dir exists)
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
-
+# Run the application.
+CMD gunicorn 'chef_site.wsgi' --bind=0.0.0.0:8000
