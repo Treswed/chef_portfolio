@@ -10,6 +10,7 @@ WORKDIR /app
 
 # Create a non-privileged user
 ARG UID=10001
+RUN chmod 664 /app/db.sqlite3
 RUN adduser \
     --disabled-password \
     --gecos "" \
@@ -26,6 +27,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 # Copy project files AFTER installing dependencies
 COPY . ./
+
+COPY db.sqlite3 /app/db.sqlite3
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
