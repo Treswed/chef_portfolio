@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: your-app-name
+    env: docker
+    dockerfilePath: ./Dockerfile
+    buildCommand: python manage.py collectstatic --noinput # or python manage.py collectstatic --noinput
+    startCommand: gunicorn chef_site.wsgi:applicatio     # or gunicorn app.wsgi:application
