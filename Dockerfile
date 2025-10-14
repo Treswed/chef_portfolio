@@ -29,8 +29,11 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 COPY . ./
 
 COPY db.sqlite3 /app/db.sqlite3
-
-RUN chmod 664 /app/db.sqlite3
+RUN chown appuser:appuser /app/db.sqlite3 && chmod 664 /app/db.sqlite3
+# Ensure the app directory and the sqlite file are writable by the appuser
+RUN chown -R appuser:appuser /app \
+    && chmod 775 /app \
+    && [ -f /app/db.sqlite3 ] && chown appuser:appuser /app/db.sqlite3 && chmod 664 /app/db.sqlite3 || true
 
 # Collect static files
 RUN python manage.py collectstatic --noinput

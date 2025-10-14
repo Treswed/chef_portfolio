@@ -13,6 +13,15 @@ services:
       context: .
     ports:
       - 8000:8000
+    volumes:
+      - .:/app
+      - C:\\Users\\Busy_John\\chef_portfolio_data:/data
+    environment:
+      - SQLITE_PATH=/data/db.sqlite3
+    # Override the default command to prepare the data directory and then start
+    # the app as the non-root user. This uses a small shell command to ensure
+    # the /data dir exists and is writable.
+    command: sh -c "mkdir -p /data && chmod 0777 /data && exec gunicorn chef_site.wsgi --bind=0.0.0.0:8000"
       
 
 # The commented out section below is an example of how to define a PostgreSQL
