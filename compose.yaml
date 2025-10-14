@@ -18,11 +18,19 @@ services:
       - C:\\Users\\Busy_John\\chef_portfolio_data:/data
     environment:
       - SQLITE_PATH=/data/db.sqlite3
+      - DJANGO_SUPERUSER_USERNAME=sensei
+      - DJANGO_SUPERUSER_EMAIL=sensei@gmail.com
+      - DJANGO_SUPERUSER_PASSWORD=sensei1234
+
     # Override the default command to prepare the data directory and then start
     # the app as the non-root user. This uses a small shell command to ensure
     # the /data dir exists and is writable.
-    command: sh -c "mkdir -p /data && chmod 0777 /data && exec gunicorn chef_site.wsgi --bind=0.0.0.0:8000"
-      
+    command: >  
+      sh -c  "mkdir -p /data &&
+             chmod 0777 /data &&
+             python manage.py migrate &&
+             python manage.py createsuperuser --noinput &&
+             exec gunicorn chef_site.wsgi --bind=0.0.0.0:8000"
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
