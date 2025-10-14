@@ -27,7 +27,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 # Copy project files AFTER installing dependencies
 COPY . ./
-
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 COPY db.sqlite3 /app/db.sqlite3
 RUN chown appuser:appuser /app/db.sqlite3 && chmod 664 /app/db.sqlite3
 # Ensure the app directory and the sqlite file are writable by the appuser
