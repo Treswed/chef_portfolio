@@ -30,7 +30,7 @@ if not User.objects.filter(username=username).exists():
 END
 
 echo "[entrypoint] starting gunicorn"
-# exec gunicorn 'chef_site.wsgi' --bind=0.0.0.0:8000
+exec gunicorn 'chef_site.wsgi' --bind=0.0.0.0:8000
 # set -e
 
 # echo "[entrypoint] running Django migrations"
