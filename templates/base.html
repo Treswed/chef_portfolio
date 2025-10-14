@@ -41,11 +41,24 @@
                 <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
                 <li><a href="{% url 'portfolio:contact' %}" class="btn-contact">Contact</a></li>
             </ul>
-            <div class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="navbar">
+
+    <div class="mobile-menu-toggle" id="mobile-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <ul class="nav-links" id="nav-links">
+        <li><a href="{% url 'portfolio:home' %}">Home</a></li>
+        <li><a href="{% url 'portfolio:about' %}">About</a></li>
+        <li><a href="{% url 'recipes:recipe_list' %}">Recipes</a></li>
+        <li><a href="{% url 'gallery:gallery' %}">Gallery</a></li>
+        <li><a href="{% url 'gallery:videos' %}">Videos</a></li>
+        <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
+        <li><a href="{% url 'portfolio:contact' %}" class="btn-contact">Contact</a></li>
+    </ul>
+</div>
         </div>
     </nav>
 
@@ -101,4 +114,12 @@
     <script src="/static/js/main.js"></script>
     {% block extra_js %}{% endblock %}
 </body>
+<script>
+    const toggle = document.getElementById('mobile-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    toggle.addEventListener('click', () => {
+        navLinks.classList.toggle('hidden');
+    });
+</script>
 </html>
