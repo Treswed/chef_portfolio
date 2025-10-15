@@ -316,6 +316,36 @@ body {
     .mobile-menu-toggle { display: flex; }
 }
 
+/* ===== Mobile-only nav: hide on larger screens ===== */
+/* The header contains two nav lists: a desktop .nav-links and a mobile #nav-links.
+   We specifically hide the mobile list (#nav-links) on larger viewports so it
+   doesn't appear alongside the desktop navigation. The mobile toggle shows
+   and controls #nav-links only on small screens. */
+
+/* Default: hide the mobile nav (explicit) to avoid conflicts on wide screens */
+#nav-links {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    /* On small screens show the mobile nav and allow the toggle to control it */
+    #nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        gap: 0;
+        padding: 1rem 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        z-index: 200;
+    }
+    /* make sure the toggle is visible on small screens */
+    .mobile-menu-toggle { display: flex; }
+}
+
 /* ===== MAIN CONTENT ===== */
 .main-content {
     position: relative;
