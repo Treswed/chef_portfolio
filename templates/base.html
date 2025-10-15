@@ -23,42 +23,36 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <svg class="chef-hat-icon" viewBox="0 0 64 64" width="50" height="50">
-                    <path d="M32 8c-4 0-7 2-9 5-2-1-4-2-7-2-6 0-10 4-10 10 0 2 1 4 2 6v8c0 8 6 14 14 14h20c8 0 14-6 14-14v-8c1-2 2-4 2-6 0-6-4-10-10-10-3 0-5 1-7 2-2-3-5-5-9-5z" fill="#FF6B6B"/>
-                    <rect x="12" y="45" width="40" height="8" rx="2" fill="#FFF"/>
-                </svg>
-                <span class="brand-name">Chef's Kitchen</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="{% url 'portfolio:home' %}">Home</a></li>
-                <li><a href="{% url 'portfolio:about' %}">About</a></li>
-                <li><a href="{% url 'recipes:recipe_list' %}">Recipes</a></li>
-                <li><a href="{% url 'gallery:gallery' %}">Gallery</a></li>
-                <li><a href="{% url 'gallery:videos' %}">Videos</a></li>
-                <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
-                <li><a href="{% url 'portfolio:contact' %}" class="btn-contact">Contact</a></li>
-            </ul>
-            <div class="navbar">
-
-    <div class="mobile-menu-toggle" onclick="toggleMenu()">
-         <span></span>
-         <span></span>
-         <span></span>
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <svg class="chef-hat-icon" viewBox="0 0 64 64" width="50" height="50">
+        <path d="M32 8c-4 0-7 2-9 5-2-1-4-2-7-2-6 0-10 4-10 10 0 2 1 4 2 6v8c0 8 6 14 14 14h20c8 0 14-6 14-14v-8c1-2 2-4 2-6 0-6-4-10-10-10-3 0-5 1-7 2-2-3-5-5-9-5z" fill="#FF6B6B"/>
+        <rect x="12" y="45" width="40" height="8" rx="2" fill="#FFF"/>
+      </svg>
+      <span class="brand-name">Chef's Kitchen</span>
     </div>
 
-    <ul class="nav-link">
-        <li><a href="{% url 'portfolio:home' %}">Home</a></li>
-        <li><a href="{% url 'portfolio:about' %}">About</a></li>
-        <li><a href="{% url 'recipes:recipe_list' %}">Recipes</a></li>
-        <li><a href="{% url 'gallery:gallery' %}">Gallery</a></li>
-        <li><a href="{% url 'gallery:videos' %}">Videos</a></li>
-        <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
-        <li><a href="{% url 'portfolio:contact' %}" class="btn-contact">Contact</a></li>
+    <!-- Hamburger Menu Button -->
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Nav Links (only one copy needed) -->
+    <ul class="nav-links" id="nav-links">
+      <li><a href="{% url 'portfolio:home' %}">Home</a></li>
+      <li><a href="{% url 'portfolio:about' %}">About</a></li>
+      <li><a href="{% url 'recipes:recipe_list' %}">Recipes</a></li>
+      <li><a href="{% url 'gallery:gallery' %}">Gallery</a></li>
+      <li><a href="{% url 'gallery:videos' %}">Videos</a></li>
+      <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
+      <li><a href="{% url 'portfolio:contact' %}" class="btn-contact">Contact</a></li>
     </ul>
-</div>
+  </div>
+</nav>
+
         </div>
     </nav>
 
@@ -115,8 +109,12 @@
     {% block extra_js %}{% endblock %}
 </body>
 <script>
-   function toggleMenu() {
-  document.querySelector('.nav-links').classList.toggle('active');
-}
+  const toggleButton = document.getElementById('mobile-menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+
+  toggleButton.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
 </script>
+
 </html>
