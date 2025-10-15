@@ -43,10 +43,10 @@
             </ul>
             <div class="navbar">
 
-    <div class="mobile-menu-toggle" id="mobile-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="mobile-menu-toggle" onclick="toggleMenu()">
+         <span></span>
+         <span></span>
+         <span></span>
     </div>
 
     <ul class="nav-links" id="nav-links">
@@ -115,11 +115,8 @@
     {% block extra_js %}{% endblock %}
 </body>
 <script>
-    const toggle = document.getElementById('mobile-toggle');
-    const navLinks = document.getElementById('nav-links');
-
-    toggle.addEventListener('click', () => {
-        navLinks.classList.toggle('hidden');
-    });
+   function toggleMenu() {
+  document.querySelector('.nav-links').classList.toggle('active');
+}
 </script>
 </html>

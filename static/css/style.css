@@ -1056,83 +1056,39 @@ body {
 }
 /* Basic styling for the navigation links */
 .nav-links {
-  list-style: none; /* Removes bullet points */
+  list-style: none;
   padding: 0;
   margin: 0;
-  display: flex; /* Arranges links in a row for desktop */
+  gap: 1rem;
+  display: flex;
 }
 
 .nav-links li a {
-  text-decoration: none; /* Removes underlines */
+  text-decoration: none;
   color: #333;
   padding: 10px 15px;
   display: block;
 }
-
-/* Hide links on mobile by default */
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .nav-links {
     display: none;
-    flex-direction: column; /* Stacks links vertically on mobile */
+    flex-direction: column;
     position: absolute;
-    top: 60px; /* Adjust based on your header height */
-    right: 0;
+    top: 60px;
+    left: 0;
     width: 100%;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
 
   .nav-links.active {
-    display: flex; /* Shows the links when the 'active' class is added */
-  }
-}
-.nav-links {
     display: flex;
-    list-style: none;
-    gap: 1rem;
-}
+  }
 
-.mobile-menu-toggle {
-    display: none;
+  .mobile-menu-toggle {
+    display: flex;
     flex-direction: column;
     cursor: pointer;
-}
-
-.mobile-menu-toggle span {
-    height: 3px;
-    width: 25px;
-    background: #333;
-    margin: 4px 0;
-    transition: 0.3s;
-}
-
-/* Mobile styles */
-/* Default: hide nav-links */
-.nav-links {
-    display: none;
-}
-
-/* Show only on mobile screens */
-@media (max-width: 768px) {
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background-color: #fff;
-        padding: 1rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .nav-links.hidden {
-        display: none;
-    }
-
-    .mobile-menu-toggle {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-    }
+  }
 }
