@@ -41,13 +41,23 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(stat);
     });
     
-    // Mobile menu toggle
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    // Mobile menu toggle: supports both the original .mobile-menu-toggle (three spans)
+    // and the accessible .mobile-menu-button.
     const navLinks = document.querySelector('.nav-links');
-    
-    if (mobileMenuToggle) {
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', () => {
+            const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', String(!expanded));
+            if (navLinks) navLinks.classList.toggle('active');
+            mobileMenuButton.classList.toggle('active');
+        });
+    } else if (mobileMenuToggle) {
+        // original markup: clicking the .mobile-menu-toggle div
         mobileMenuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+            if (navLinks) navLinks.classList.toggle('active');
             mobileMenuToggle.classList.toggle('active');
         });
     }
@@ -303,3 +313,5 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollBtn.style.transform = 'scale(1)';
     });
 });
+
+// (mobile toggle handled above)

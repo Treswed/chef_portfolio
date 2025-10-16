@@ -231,68 +231,50 @@ body {
     background-clip: text;
 }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-}
-
-.btn-contact {
-    padding: 0.5rem 1.5rem;
-    background: var(--primary-color);
-    color: var(--white);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-}
-
-.btn-contact:hover {
-    background: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--shadow-lg);
-}
-
+/* Mobile Menu Toggle */
 .mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .mobile-menu-toggle span {
-    width: 25px;
-    height: 3px;
-    background: var(--primary-color);
-    border-radius: 3px;
-    transition: all 0.3s ease;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
 }
+
+/* Responsive Nav */
+@media (max-width: 768px) {
+  .nav-links {
+    display: ruby-base;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+}
+
+/* ===== Mobile-only nav: hide on larger screens ===== */
+/* The header contains two nav lists: a desktop .nav-links and a mobile #nav-links.
+   We specifically hide the mobile list (#nav-links) on larger viewports so it
+   doesn't appear alongside the desktop navigation. The mobile toggle shows
+   and controls #nav-links only on small screens. */
+
+/* Default: hide the mobile nav (explicit) to avoid conflicts on wide screens */
 
 /* ===== MAIN CONTENT ===== */
 .main-content {
@@ -1002,3 +984,4 @@ body {
         font-size: 2rem;
     }
 }
+/* Basic styling for the navigation links */
