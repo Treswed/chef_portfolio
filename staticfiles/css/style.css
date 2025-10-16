@@ -270,28 +270,63 @@ body {
 
     }
 }
-@media (max-width: 858px){
+@media (max-width: 858px) {
+    /* show the mobile menu button */
     .checkbtn{
         display: block;
     }
-    ul{
-        position: fixed;
-        width: 100%;
-        height: 100vh;
-        background: darkblue;
-        top: 80px;
+
+    /* hide the desktop horizontal nav on small screens */
+    .navbar-nav {
+        display: none !important;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    /* Ensure Bootstrap's .collapse doesn't force visibility; we'll control with #check */
+    .collapse.show .navbar-nav {
+        display: none !important;
+    }
+
+    /* Reveal the mobile nav when the checkbox toggle is checked (use .mobile-nav) */
+    #check:checked ~ .mobile-nav .navbar-nav {
+        display: flex !important;
+        position: absolute;
+        top: 64px; /* adjust to match header height */
         left: 0;
+        right: 0;
+        /* dark background and centered vertical layout */
+        background: linear-gradient(180deg, #3b1376 0%, #1b0a5a 60%, #0b0b3a 100%);
+        padding: 0.5rem 0.75rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        z-index: 210;
+        min-height: calc(100vh - 64px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-item {
+        display: block;
+        margin: 0.25rem 0;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.9rem 1rem;
+        font-size: 18px;
+        color: #fff;
         text-align: center;
     }
-    .nav-item{
-        display: block;
+
+    .nav-link:hover {
+        color: var(--primary-color);
+        background: rgba(255,255,255,0.04);
+        border-radius: 6px;
     }
-    .nav-item a{
-        font-size: 20px;
-    }
-    a:hover, a.active{
-        background: none;
-        color: blue;
+
+    /* keep checkbox visually hidden but accessible */
+    #check {
+        display: none;
     }
 }
     
