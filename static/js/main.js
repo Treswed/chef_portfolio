@@ -5,7 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const statNumbers = document.querySelectorAll('.stat-number');
     
     const animateNumber = (element) => {
-        const target = parseInt(element.getAttribute('data-target'));
+        // Accept numbers that may include thousands separators (commas) or
+        // other formatting. Strip non-numeric characters except dot and -.
+        const raw = element.getAttribute('data-target') || element.dataset.target || '0';
+        const cleaned = String(raw).replace(/[^0-9\.-]/g, '');
+        const target = Number(cleaned) || 0;
         const duration = 2000;
         const start = 0;
         const increment = target / (duration / 16);

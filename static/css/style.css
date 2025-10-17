@@ -705,6 +705,13 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* Prevent numbers from wrapping into multiple lines and keep consistent line-height */
+.stat-number {
+    white-space: nowrap;
+    line-height: 1;
+    display: inline-block;
+}
+
 .stat-label {
     font-size: 1rem;
     opacity: 0.9;

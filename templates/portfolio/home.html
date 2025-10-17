@@ -94,26 +94,36 @@
 <section class="stats-section">
     <div class="container">
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">🍳</div>
-                <h3 class="stat-number" data-target="150">0</h3>
-                <p class="stat-label">Recipes Created</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">⭐</div>
-                <h3 class="stat-number" data-target="{% if chef %}{{ chef.years_experience }}{% else %}10{% endif %}">0</h3>
-                <p class="stat-label">Years Experience</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">👨‍🍳</div>
-                <h3 class="stat-number" data-target="50">0</h3>
-                <p class="stat-label">Cooking Classes</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">❤️</div>
-                <h3 class="stat-number" data-target="10000">0</h3>
-                <p class="stat-label">Happy Customers</p>
-            </div>
+            {% if site_stats %}
+                {% for stat in site_stats %}
+                <div class="stat-card">
+                    <div class="stat-icon">{{ stat.icon }}</div>
+                    <h3 class="stat-number" data-target="{{ stat.value }}">0</h3>
+                    <p class="stat-label">{{ stat.label }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="stat-card">
+                    <div class="stat-icon">🍳</div>
+                    <h3 class="stat-number" data-target="150">0</h3>
+                    <p class="stat-label">Recipes Created</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <h3 class="stat-number" data-target="{% if chef %}{{ chef.years_experience }}{% else %}10{% endif %}">0</h3>
+                    <p class="stat-label">Years Experience</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🍳</div>
+                    <h3 class="stat-number" data-target="50">0</h3>
+                    <p class="stat-label">Cooking Classes</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❤️</div>
+                    <h3 class="stat-number" data-target="10000">0</h3>
+                    <p class="stat-label">Happy Customers</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </section>
